@@ -1,0 +1,55 @@
+# Place this file at: .github/workflows/release-debug.yml
+name: Release Debug APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # No Gradle wrapper is committed to this repo (the wrapper jar is a
+      # binary file, and this project was scaffolded through a text-only
+      # tool). This step provisions Gradle directly instead of using ./gradlew.
+      - name: Set up Gradle 8.7
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: "8.7"
+
+      - name: Build debug APK
+        run: gradle assembleDebug
+
+      - name: Compute release tag
+        id: vars
+        run: echo "tag=debug-$(date +'%Y%m%d')-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Collect APKs
+        run: |
+          mkdir -p release-apks
+          find . -path "*/build/outputs/apk/debug/*.apk" -exec cp {} release-apks/ \;
+          ls -la release-apks
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.tag }}
+          name: "YDC Debug Build ${{ steps.vars.outputs.tag }}"
+          prerelease: true
+          generate_release_notes: true
+          files: release-apks/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
