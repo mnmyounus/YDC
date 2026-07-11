@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YDC</string>
+    <string name="app_tagline">Your Device Controller</string>
+    <string name="ydc_accessibility_description">Lets YDC simulate taps and button presses so it can be controlled remotely from another paired device.</string>
+    <string name="section_setup">Setup</string>
+    <string name="section_host_mode">Host Mode</string>
+    <string name="section_discover">Discover Nearby Devices</string>
+    <string name="section_transfer">Send a File</string>
+    <string name="section_danger">Danger Zone</string>
+    <string name="default_device_name">YDC Device</string>
+</resources>

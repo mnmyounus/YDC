@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.YDC" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/ydc_primary</item>
+        <item name="colorPrimaryDark">@color/ydc_primary_dark</item>
+        <item name="colorAccent">@color/ydc_primary</item>
+        <item name="android:windowBackground">@color/ydc_background</item>
+    </style>
+</resources>

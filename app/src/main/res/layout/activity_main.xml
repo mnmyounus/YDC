@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ydc_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/ydc_on_surface"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_tagline"
+            android:textColor="@color/ydc_muted"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Setup -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/ydc_surface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_setup"
+                    android:textColor="@color/ydc_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRequestPermissions"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Request Permissions" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAccessibilitySettings"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Open Accessibility Settings" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDeviceAdmin"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Enable Device Admin" />
+
+                <TextView
+                    android:id="@+id/statusText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/ydc_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Host mode -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/ydc_surface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_host_mode"
+                    android:textColor="@color/ydc_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Device name">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/deviceNameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/default_device_name" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToggleHostMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Start Host Mode" />
+
+                <TextView
+                    android:id="@+id/hostModeStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/ydc_muted"
+                    android:textSize="13sp"
+                    android:text="Stopped" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Discover -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/ydc_surface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_discover"
+                    android:textColor="@color/ydc_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnScan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Scan for Devices" />
+
+                <TextView
+                    android:id="@+id/discoveredDevices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/ydc_muted"
+                    android:textSize="13sp"
+                    android:text="No devices found yet." />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- File transfer -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/ydc_surface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_transfer"
+                    android:textColor="@color/ydc_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPickAndSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pick &amp; Send to First Found Device" />
+
+                <TextView
+                    android:id="@+id/transferStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/ydc_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Danger zone -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/ydc_surface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/ydc_danger"
+            app:strokeWidth="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_danger"
+                    android:textColor="@color/ydc_danger"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUninstall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/ydc_danger"
+                    android:text="Uninstall YDC" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

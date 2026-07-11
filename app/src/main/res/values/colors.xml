@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#1B1F3B</color>
+    <color name="ydc_primary">#2F6FED</color>
+    <color name="ydc_primary_dark">#13224D</color>
+    <color name="ydc_background">#0F1226</color>
+    <color name="ydc_surface">#1B1F3B</color>
+    <color name="ydc_on_surface">#F2F4FF</color>
+    <color name="ydc_muted">#9AA3C7</color>
+    <color name="ydc_danger">#E5484D</color>
+</resources>
