@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YDC — Your Device Controller</title>
+<meta name="description" content="Local network device management for devices you own — a family's shared phones, or a small business's fleet. LAN/Bluetooth only, visible confirmation on every remote action.">
+<meta name="google-site-verification" content="PASTE_HERE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"YDC","alternateName":"Your Device Controller","applicationCategory":"UtilitiesApplication","operatingSystem":"Android, Android TV, Android Automotive","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<style>
+  :root{
+    --bg:#101215;--bg-raised:#191C21;--bg-inset:#0A0C0E;--line:#282D34;--line-soft:#1D2126;
+    --text:#ECEFF2;--text-dim:#9CA3AE;--text-faint:#585F6A;
+    --accent:#5EEAD4;--accent-dim:#2FA893;--accent-bg:rgba(94,234,212,.08);
+    --sans:'Inter',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+  header{position:sticky;top:0;z-index:50;background:rgba(16,18,21,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft);}
+  .headbar{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;}
+  .brand .mark{width:22px;height:22px;border-radius:5px;background:var(--accent-bg);border:1px solid var(--accent-dim);}
+  nav{display:flex;gap:2px;}
+  nav button{background:none;border:none;color:var(--text-dim);font-size:13.5px;font-weight:500;padding:8px 14px;border-radius:7px;cursor:pointer;}
+  nav button:hover,nav button.active{color:var(--text);background:var(--bg-raised);}
+  .head-cta{font-family:var(--mono);font-size:12.5px;font-weight:600;background:var(--bg-inset);border:1px solid var(--line);padding:7px 13px;border-radius:7px;}
+  @media (max-width:760px){nav{display:none;}}
+  main{display:none;}main.active{display:block;}
+  .hero{padding:80px 0 56px;}
+  .context-banner{background:var(--bg-raised);border:1px solid var(--line);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text-dim);margin-bottom:32px;display:flex;align-items:center;gap:10px;}
+  .context-banner svg{width:16px;height:16px;stroke:var(--accent);flex-shrink:0;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .eyebrow{font-family:var(--mono);font-size:12px;color:var(--text-faint);margin-bottom:18px;}
+  h1{font-size:40px;line-height:1.12;font-weight:800;letter-spacing:-.02em;margin-bottom:20px;}
+  h1 span{color:var(--accent);}
+  .lede{font-size:17px;color:var(--text-dim);max-width:48ch;margin-bottom:30px;}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;}
+  .btn-primary{background:var(--text);color:var(--bg);font-weight:700;font-size:14.5px;padding:13px 22px;border-radius:8px;display:inline-flex;gap:8px;align-items:center;}
+  .btn-secondary{border:1px solid var(--line);color:var(--text-dim);font-weight:600;font-size:14.5px;padding:13px 22px;border-radius:8px;}
+  .device-mock{background:var(--bg-raised);border:1px solid var(--line);border-radius:14px;padding:22px;}
+  .device-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line-soft);}
+  .device-row:last-child{border-bottom:none;}
+  .device-name{font-size:13px;font-weight:600;}
+  .device-meta{font-family:var(--mono);font-size:10.5px;color:var(--text-faint);}
+  .conn-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:6px;}
+  section{padding:68px 0;border-top:1px solid var(--line-soft);}
+  .section-head{max-width:640px;margin-bottom:40px;}
+  .section-tag{font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:10px;}
+  h2{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;}
+  .section-desc{color:var(--text-dim);font-size:15.5px;line-height:1.65;}
+  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;}
+  @media (max-width:820px){.fgrid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.fgrid{grid-template-columns:1fr;}}
+  .fcard{background:var(--bg-raised);padding:24px 20px;}
+  .fcard h3{font-size:14.5px;font-weight:700;margin-bottom:6px;}
+  .fcard p{font-size:13px;color:var(--text-faint);line-height:1.55;}
+  .decline-panel{background:var(--bg-raised);border:1px solid var(--line);border-radius:14px;padding:30px;margin-top:28px;}
+  .decline-panel h4{font-size:16px;font-weight:700;margin-bottom:14px;}
+  .decline-panel .row{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--line-soft);}
+  .decline-panel .row:first-of-type{border-top:none;}
+  .decline-panel .row .no{color:#FF9F7A;font-family:var(--mono);font-size:12px;font-weight:700;flex-shrink:0;width:90px;}
+  .decline-panel .row p{font-size:13.5px;color:var(--text-dim);line-height:1.6;}
+  .arch-block{background:var(--bg-inset);border:1px solid var(--line);border-radius:12px;padding:24px;font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--text-dim);white-space:pre;overflow-x:auto;}
+  .arch-block .lbl{color:var(--accent);}
+  .stub-list{list-style:none;}
+  .stub-list li{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px;color:var(--text-dim);}
+  .stub-list li:last-child{border-bottom:none;}
+  .stub-list .marker{color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  .faq-item{padding:18px 0;border-top:1px solid var(--line-soft);}
+  .faq-item h4{font-size:14.5px;font-weight:700;margin-bottom:8px;}
+  .faq-item p{font-size:13.5px;color:var(--text-faint);line-height:1.6;}
+  .gh-hero{text-align:center;padding:60px 0;background:var(--bg-raised);border:1px solid var(--line);border-radius:16px;}
+  .gh-hero h2{margin-bottom:10px;}
+  .gh-hero p{color:var(--text-dim);max-width:44ch;margin:0 auto 26px;}
+  .repo-line{font-family:var(--mono);font-size:13px;color:var(--text-dim);background:var(--bg-inset);border:1px solid var(--line);border-radius:8px;padding:11px 16px;display:inline-flex;gap:10px;}
+  footer{border-top:1px solid var(--line-soft);padding:28px 0;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--text-faint);}
+  .foot-links{display:flex;gap:20px;}
+</style>
+</head>
+<body>
+<header><div class="wrap headbar">
+  <div class="brand"><span class="mark"></span>YDC</div>
+  <nav>
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="features">Features</button>
+    <button class="tab-btn" data-tab="security">Security</button>
+    <button class="tab-btn" data-tab="docs">Docs</button>
+    <button class="tab-btn" data-tab="github">GitHub</button>
+  </nav>
+  <a class="head-cta" href="https://github.com/mnmyounus/YDC" target="_blank" rel="noopener">Source</a>
+</div></header>
+
+<main class="active" id="overview">
+  <section class="hero" style="border-top:none;">
+    <div class="wrap">
+      <div class="context-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        For devices you own or manage: a family's shared phones and tablets, or a small business's device fleet — all on your own local network.
+      </div>
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">LAN / BLUETOOTH · OFFLINE-FIRST · NO CLOUD RELAY</div>
+          <h1>Manage your own devices, over your own network, with <span>nothing hidden</span> from the person holding them.</h1>
+          <p class="lede">YDC discovers and controls devices you own over local Wi-Fi or Bluetooth — no internet relay, no cloud account. File transfer, remote actions, and setup all happen on your LAN, and every consequential action requires visible on-device confirmation.</p>
+          <div class="hero-ctas">
+            <a class="btn-primary" href="#" onclick="switchTab('docs');return false;">Quickstart</a>
+            <a class="btn-secondary" href="#" onclick="switchTab('security');return false;">What was declined, and why</a>
+          </div>
+        </div>
+        <div class="device-mock">
+          <div class="device-row"><div><div class="device-name"><span class="conn-dot"></span>Kitchen Tablet</div><div class="device-meta">192.168.1.42 · Host active</div></div><span class="device-meta">connected</span></div>
+          <div class="device-row"><div><div class="device-name"><span class="conn-dot"></span>Front Desk — Register 2</div><div class="device-meta">192.168.1.58 · NSD discovered</div></div><span class="device-meta">connected</span></div>
+          <div class="device-row"><div><div class="device-name" style="color:var(--text-faint);">Kid's Phone</div><div class="device-meta">Bluetooth · not paired</div></div><span class="device-meta">idle</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<main id="features">
+  <section style="border-top:none;padding-top:64px;">
+    <div class="wrap">
+      <div class="section-head"><div class="section-tag">Features</div><h2>What's compiled into the current build</h2></div>
+      <div class="fgrid">
+        <div class="fcard"><h3>Host Mode</h3><p>Starts LAN advertising (NSD) and an embedded control/file server, toggled directly from the UI.</p></div>
+        <div class="fcard"><h3>Discover nearby devices</h3><p>Live scan over your local network — results stream straight into the app, no manual IP entry.</p></div>
+        <div class="fcard"><h3>Send a file</h3><p>Pick a file with the system document picker, send it to a discovered device over local HTTP.</p></div>
+        <div class="fcard"><h3>Remote actions with visible confirmation</h3><p>Incoming commands route through an Accessibility Service to taps, swipes, or system actions like volume and app launch — every one surfaced on-screen, not silent.</p></div>
+        <div class="fcard"><h3>Bluetooth fallback</h3><p>Compiled in and ready for networks without Wi-Fi; not yet wired to a UI control in this pass.</p></div>
+        <div class="fcard"><h3>Cross-platform targets</h3><p>Built for mobile, Android TV, Android Automotive, and smart displays from one codebase.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<main id="security">
+  <section style="border-top:none;padding-top:64px;">
+    <div class="wrap">
+      <div class="section-head"><div class="section-tag">Security</div><h2>Two capabilities that were scoped out</h2>
+      <p class="section-desc">Both were part of an earlier spec and were replaced with a visible-consent alternative that does the same job.</p></div>
+      <div class="decline-panel">
+        <h4>Design decisions</h4>
+        <div class="row">
+          <div class="no">NOT BUILT</div>
+          <p>Accessibility Service gesture injection used to remotely control a device without any on-screen indication to whoever is holding it.</p>
+        </div>
+        <div class="row">
+          <div class="no">NOT BUILT</div>
+          <p>A silent wipe-then-auto-uninstall path triggered remotely with no local confirmation step.</p>
+        </div>
+        <div class="row">
+          <div class="no">BUILT INSTEAD</div>
+          <p>A closed WebSocket command channel — only devices on the same local network, already paired, can issue commands — and a wipe/uninstall flow that requires the person at the device to confirm before anything happens.</p>
+        </div>
+      </div>
+      <div class="section-head" style="margin-top:52px;"><div class="section-tag">Network model</div><h2>No cloud, no relay, no remote-from-anywhere</h2></div>
+      <p class="section-desc">Discovery and control both run over LAN (NSD) or Bluetooth. There's no internet-facing server component — a device outside your local network can't be discovered or commanded at all, by design.</p>
+    </div>
+  </section>
+</main>
+
+<main id="docs">
+  <section style="border-top:none;padding-top:64px;">
+    <div class="wrap">
+      <div class="section-head"><div class="section-tag">Docs</div><h2>Deploy via GitHub Actions</h2></div>
+      <ol style="color:var(--text-dim);font-size:14px;line-height:2;padding-left:20px;">
+        <li>Push the project to a new repo's <span style="font-family:var(--mono);color:var(--text);">main</span> branch, keeping <span style="font-family:var(--mono);color:var(--text);">.github/workflows/release-debug.yml</span> at that path</li>
+        <li>The workflow runs automatically on push, or trigger it manually from the Actions tab</li>
+        <li>Check the repo's Releases page for the built APK</li>
+      </ol>
+      <div class="section-head" style="margin-top:48px;"><div class="section-tag">Architecture</div><h2>Seven-module Gradle build</h2></div>
+      <div class="arch-block">HostSessionManager      <span class="lbl">→ starts/stops NSD + Ktor control/file server</span>
+DeviceDiscovery         <span class="lbl">→ live NSD scan, streamed to UI</span>
+FileTransferManager     <span class="lbl">→ document picker → HTTP send</span>
+YdcAccessibilityService <span class="lbl">→ wired to RemoteControlBridge</span>
+RemoteControlBridge     <span class="lbl">→ routes WebSocket commands to taps/swipes/actions</span>
+BluetoothTransport      <span class="lbl">→ compiled in, not yet UI-wired</span></div>
+      <div class="section-head" style="margin-top:48px;"><div class="section-tag">Known status</div><h2>What's not finished</h2></div>
+      <ul class="stub-list">
+        <li><span class="marker">→</span>ProGuard stubs not yet completed.</li>
+        <li><span class="marker">→</span>GitHub Actions workflow not yet completed for this milestone.</li>
+        <li><span class="marker">→</span>Bluetooth fallback is compiled but has no UI control in this pass — the LAN path is what's currently driven from the screen.</li>
+      </ul>
+      <div class="section-head" style="margin-top:48px;"><div class="section-tag">FAQ</div><h2>Common questions</h2></div>
+      <div class="faq-item"><h4>Can YDC control a device I don't have physical access to set up?</h4><p>No — Host Mode has to be started on the target device itself, and it only advertises on the local network. There's no remote-provisioning path.</p></div>
+      <div class="faq-item"><h4>Does the person using the controlled device see anything?</h4><p>Yes, by design. Remote actions surface on-screen, and the wipe/uninstall flow requires local confirmation rather than running silently.</p></div>
+      <div class="faq-item"><h4>Can I build this myself right now?</h4><p>The build environment used to create this project has no access to Google's Maven, Maven Central, or Gradle's servers, so it hasn't been compiled end-to-end yet. If GitHub Actions fails on a specific dependency, that error will name it directly.</p></div>
+    </div>
+  </section>
+</main>
+
+<main id="github">
+  <section style="border-top:none;padding-top:64px;">
+    <div class="wrap">
+      <div class="gh-hero">
+        <h2>LAN-only by design. Check the manifest yourself.</h2>
+        <p>Seven Gradle modules, full source, WebSocket command channel scoped to your local network.</p>
+        <a class="repo-line" href="https://github.com/mnmyounus/YDC" target="_blank" rel="noopener">github.com/mnmyounus/YDC</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap foot-row">
+  <p>© 2026 MNM YOUNUS</p>
+  <div class="foot-links"><a href="https://github.com/mnmyounus/YDC" target="_blank">GitHub</a><a href="#" onclick="switchTab('docs');return false;">Docs</a></div>
+</div></footer>
+
+<script>
+  const buttons=document.querySelectorAll('.tab-btn'),mains=document.querySelectorAll('main');
+  function switchTab(id){mains.forEach(m=>m.classList.toggle('active',m.id===id));buttons.forEach(b=>b.classList.toggle('active',b.dataset.tab===id));window.scrollTo({top:0});}
+  buttons.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+</script>
+</body>
+</html>
